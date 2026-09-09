@@ -26,9 +26,10 @@ no logo, no team introduction.
 
 ## 0:25 – 1:15 · The demo
 
-**Shot:** play the animation from the top. Let it run. Say nothing the screen is
-not showing, and **stop talking for the last three seconds** so the final frame
-lands in silence.
+**Shot:** one play-through at full speed, then scrub back and hold on the count
+frame while you finish the narration. The scrub doubles as proof the timeline is
+interactive. Say nothing the screen is not showing, and **stop talking for the
+last three seconds of the play-through** so the final frame lands in silence.
 
 > "This is the air that arrived in Delhi on the morning of the 18th of November,
 > when PM2.5 hit seven hundred micrograms — nearly three times the threshold for
@@ -67,16 +68,23 @@ lands in silence.
 
 **Shot:** scroll to the specification grid. Let the four rows sit on screen.
 
-> "One convincing day is not evidence. So before we ran anything, we wrote down
-> the test: four specifications, fixed in advance, scored against a deliberately
-> fair opponent — a naive model that just counts all the fire power in the region
-> over the same forty-eight hours. Both models see identical fires. The only
-> difference is that ours knows where the wind went.
+> "One convincing day is not evidence. So we wrote down what would count as
+> success *before* we ran it — four specifications, fixed in advance. In science
+> that's called pre-registering, and it means you can't quietly go looking for the
+> version that works.
+>
+> We scored it against a deliberately fair opponent: a naive model that just
+> counts all the fire power in the region over the same forty-eight hours. Both
+> models see identical fires. The only difference is that ours knows where the
+> wind went.
 >
 > We lost. In all four. The naive fire count beat our physics every single time,
-> and our index never reached significance in any of them."
+> and our index never reached significance in any of them.
+>
+> That's not a failed project. Knowing that a method *doesn't* work, and being
+> able to say exactly why, is a result — and it's one almost nobody publishes."
 
-*(~95 words · 38s)*
+*(~140 words · 56s)*
 
 ---
 
@@ -94,11 +102,18 @@ lands in silence.
 > gets flushed out.
 >
 > Then we tested the baseline the same way, and it fell apart too. Its correlation
-> was point five seven — but that's the burning season and the smog season rising
-> together. Correlate day-to-day changes instead of levels, and it drops to point
-> zero five. Neither model predicts any individual day."
+> was point five seven, which looks strong. But burning rises and falls across the
+> season, and so does Delhi's smog — so two things that both follow the calendar
+> will track each other beautifully without one causing the other at all. Ask
+> instead whether a change in burning predicts a change in pollution *tomorrow*,
+> and it drops to point zero five. Neither model predicts any individual day.
+>
+> And that matters for what you do about it. On fifteen of our fifty-two days,
+> the air arriving in Delhi hadn't come from the burning belt at all — it came in
+> from the east. If you blame stubble burning on those days, you're sending
+> enforcement four hundred kilometres in the wrong direction."
 
-*(~150 words · 60s)*
+*(~205 words · 82s)*
 
 ---
 
@@ -121,7 +136,11 @@ lands in silence.
 
 *(~125 words · 50s)*
 
-**Total: ~610 words ≈ 3:25.**
+**Total: ~735 words ≈ 4:05.**
+
+That is over the 3:30 target and well inside the 5:00 ceiling. If you want it
+back under 3:45, cut §3 (How it works) to two sentences — the README carries
+that detail and no judge decides on it. Do not cut from §4 or §5.
 
 ---
 
@@ -136,6 +155,7 @@ above — they are the versions we deliberately did **not** write.
 | "These 1,384 fires caused the pollution" | Attribution is passage, not causation. Say "the air passed over". |
 | "Our model shows attribution works on transport days" | p = 0.30. Not significant. |
 | "Days with no upwind fires were cleaner" | p = 0.21. Not significant. Do not state it as fact. |
+| "On stagnation days the pollution is local" | The straightness split is p = 0.30 / 0.44. Say where the air *came from*, which we reconstruct, not what caused the pollution, which we did not establish. |
 | "There is no relationship between fires and Delhi's air" | Overclaims a null. The interval is ±0.32; we can exclude a strong effect, not a modest one. |
 | "We proved the naive baseline is wrong" | We showed its levels correlation is seasonal. That is narrower. |
 | "Wind ventilates the city, lowering PM2.5" | ρ = −0.246, p = 0.079. Suggestive, not significant. |
@@ -162,6 +182,8 @@ where to point.
 | "less than half as polluted" | 255.8 ÷ 644.0 = 40% | `ventilation_paradox` |
 | "point five seven" | 0.573 | `detrended_comparison.levels.rho_naive` |
 | "point zero five" | 0.052 | `detrended_comparison.first_differences.rho_naive` |
+| "fifteen of our fifty-two days… came in from the east" | 15 of 52 | `negative_control.n_control_days`, bearing sector 45–225° |
+| "four hundred kilometres in the wrong direction" | 505 km path, NW origin | `episode.path_km`, `episode.origin` |
 
 **Three errors were caught in the first draft of this script** and are fixed
 above. Recording the draft version would have put false numbers in the video:
