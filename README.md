@@ -8,6 +8,31 @@ it said nobody has shown it yet, including us.**
 
 ---
 
+## Why this matters
+
+Blaming Delhi's smog on Punjab's stubble burning is not a debate that stays in
+journals. It drives enforcement, court directives and fines on individual
+farmers, every winter. The accuracy of that attribution is somebody's
+livelihood.
+
+And the obvious way to do the attribution is to count fires: a lot of burning
+upwind, therefore the smoke is theirs. **We built the tool to test whether that
+reasoning holds, and it does not hold in the way it is usually assumed to.**
+
+To be precise about what we are and are not saying: we have **not** shown that
+enforcement was misdirected on any specific day. What we have shown is narrower
+and, we think, more useful — a fire count cannot distinguish the days when the
+arriving air actually made the journey from the days when it did not. On 15 of
+our 52 days, our reconstruction puts the air arriving in Delhi from the east,
+not from the burning belt at all. A fire count would have scored those days the
+same way regardless.
+
+Knowing when a method cannot support a conclusion is what stops it being used
+to reach one. That is the contribution here, and it is the reason a null result
+was worth publishing rather than burying.
+
+---
+
 ## The headline result
 
 We traced the air arriving in Delhi backwards through recorded wind, hour by hour,
@@ -122,9 +147,7 @@ git clone https://github.com/Hackathons-4thyear/NextStep.git
 cd NextStep
 pip install -r requirements.txt
 cp .env.example .env          # then add your two free API keys
-python verify_day1.py         # fetches everything, prints a go/no-go verdict
-python -m pipeline.validate   # the season-wide comparison
-python -m pipeline.export     # writes docs/data/*.json
+python -m pipeline.run_all    # fetch → validate → export, end to end
 python -m tests.test_physics && python -m tests.test_attribution   # 51 checks
 ```
 

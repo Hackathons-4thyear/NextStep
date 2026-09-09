@@ -15,16 +15,26 @@ Paste-ready. Matches the video's voice: the question, not a boast.
 
 ## Elevator pitch (first paragraph — many judges read only this)
 
-Every winter Delhi's air turns toxic and everyone already knows the answer: stubble
-burning in Punjab. We built a Lagrangian back-trajectory model to prove it — stepping
-recorded wind backwards from Delhi, fifteen minutes at a time, to reconstruct where
-the arriving air came from and which satellite-detected fires it crossed. Then we
-tested it across a full season against a deliberately fair baseline. **It lost, in
-all four pre-registered specifications.** And when we applied the same scrutiny to
-the baseline, that fell apart too: its apparent correlation was the burning season
-and the smog season rising together, and it vanished under first differencing. The
-honest finding is that neither model explains day-to-day variation in Delhi's PM2.5 —
-and we can show exactly why the fire-counting approach fails.
+Blaming Delhi's winter smog on Punjab's stubble burning is not an academic debate.
+It drives enforcement, court directives and fines on individual farmers every
+winter, and the obvious way to make that attribution is to count fires burning
+upwind. **We built a physical transport model to test whether that reasoning
+holds — and it doesn't hold the way it is usually assumed to.** We step recorded
+wind backwards from Delhi, fifteen minutes at a time, to reconstruct where the
+arriving air came from and which satellite-detected fires it crossed, then test it
+across a full season against a deliberately fair baseline. It lost in all four
+pre-registered specifications. And when we applied the same scrutiny to the
+baseline, that fell apart too — its apparent correlation was the burning season and
+the smog season rising together, and it vanished under first differencing.
+
+We are careful about what this licenses. We have **not** shown that enforcement was
+misdirected on any particular day. We have shown something narrower: a fire count
+cannot tell apart the days when the arriving air actually made that journey from the
+days when it did not. On 15 of our 52 days our reconstruction puts the incoming air
+arriving from the east rather than the burning belt, and a fire count would have
+scored those days identically. Knowing when a method cannot support a conclusion is
+what stops it being used to reach one — and that is why a null result was worth
+publishing rather than burying.
 
 ---
 

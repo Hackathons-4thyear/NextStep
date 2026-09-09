@@ -514,21 +514,41 @@ function renderFindings() {
   // Exploratory: the two-day illustration.
   const vp = season.ventilation_paradox;
   const a = vp.high_pm_day, b = vp.high_index_day;
+  // Paired bars, not two columns of numerals. The argument is that one quantity
+  // goes up while the other goes down, and identical numbers in identical
+  // styling leave the reader to notice that unaided. Crossing bars show it.
+  const maxFires = Math.max(a.fires_attributed, b.fires_attributed);
+  const maxPm = Math.max(a.pm25, b.pm25);
+
   const frame = (x, cap) => `
     <div class="frame">
       <div class="date">${x.date}</div>
-      <div class="big num">${fmt(x.pm25)}</div>
       <div class="cap">${cap}</div>
+      <div class="pair">
+        <div class="pair-row">
+          <span class="pair-label">Fires the air crossed</span>
+          <span class="pair-val num">${fmt(x.fires_attributed)}</span>
+        </div>
+        <div class="pair-bar fires">
+          <span style="width:${(x.fires_attributed / maxFires * 100).toFixed(1)}%"></span>
+        </div>
+        <div class="pair-row">
+          <span class="pair-label">PM2.5 that arrived</span>
+          <span class="pair-val num">${fmt(x.pm25)} <em>µg/m³</em></span>
+        </div>
+        <div class="pair-bar pm">
+          <span style="width:${(x.pm25 / maxPm * 100).toFixed(1)}%"></span>
+        </div>
+      </div>
       <ul>
-        <li><span>Fires crossed</span><span class="num">${fmt(x.fires_attributed)}</span></li>
         <li><span>Smoke index</span><span class="num">${fmt(x.smoke_index)}</span></li>
         <li><span>Straightness</span><span class="num">${x.straightness.toFixed(2)}</span></li>
         <li><span>Air came from</span><span class="num">${compass(x.upwind_bearing)} ${x.upwind_bearing.toFixed(0)}°</span></li>
       </ul>
     </div>`;
   $("twoframe").innerHTML =
-    frame(a, "µg/m³ — the season's worst air") +
-    frame(b, "µg/m³ — the season's highest smoke index");
+    frame(a, "the season's worst air") +
+    frame(b, "the season's highest smoke index");
   $("twoframe-note").innerHTML =
     `The second day crossed ${(b.fires_attributed / a.fires_attributed).toFixed(1)}×
      as many fires along a straighter path from the same direction, and the air

@@ -321,6 +321,34 @@ blockquote {
 .frame .date { font-size: 12px; color: var(--ink-quiet); }
 .frame .big { font-size: 32px; font-weight: 600; line-height: 1.1; margin: 8px 0 2px; }
 .frame .cap { font-size: 12px; color: var(--ink-quiet); }
+/* Paired bars. Fire count above, arriving PM2.5 below, both scaled to the same
+   maximum across the two days — so the reversal between the panels is a shape
+   you see rather than an arithmetic comparison the reader has to perform. */
+.pair { margin: 16px 0 4px; }
+
+.pair-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 5px;
+  font-size: 12.5px;
+  color: var(--ink-quiet);
+}
+
+.pair-val { color: var(--ink); font-size: 19px; font-weight: 600; }
+.pair-val em { font-style: normal; font-size: 11px; color: var(--ink-quiet); }
+
+.pair-bar {
+  height: 12px;
+  margin-bottom: 16px;
+  background: rgba(140, 154, 171, .13);
+  border-radius: 2px;
+}
+
+.pair-bar span { display: block; height: 100%; border-radius: 2px; }
+.pair-bar.fires span { background: var(--fire); }
+.pair-bar.pm span { background: var(--air); }
+
 .frame ul { margin: 14px 0 0; padding: 0; list-style: none; font-size: 12.5px; }
 .frame li { display: flex; justify-content: space-between; padding: 5px 0; border-top: 1px solid var(--ground-line); }
 .frame li span:first-child { color: var(--ink-quiet); }

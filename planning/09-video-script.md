@@ -1,146 +1,141 @@
-# Video script — 3:30 target
+# Video script — 4:30 target, 5:00 hard ceiling
 
-Word count is tuned to roughly 150 words per minute. Read it aloud with a stopwatch
-before recording; if you land over 4:00, cut from §3 (How it works) first, never
-from §5 (Why it failed).
+Word counts below are measured, not estimated, at 150 words per minute. Read it
+aloud with a stopwatch: if you speak slowly this runs long, and going over five
+minutes risks disqualification on a stated requirement.
 
-Every number here is pulled from `docs/data/season.json`. If you re-run the
-pipeline and a number moves, fix it here too.
+Every number is pulled from `docs/data/`. If you re-run the pipeline and a
+number moves, fix it here too.
 
 ---
 
-## 0:00 – 0:25 · The question
+## 0:00 – 0:20 · The question
 
-**Shot:** the map, already dark, Delhi marked, nothing else moving. No title card,
-no logo, no team introduction.
+**Shot:** the map, already dark, Delhi marked, nothing moving. No title card, no
+logo, no team introduction.
 
-> "Every winter, Delhi's air turns toxic, and everybody already knows the answer:
+> "Every winter Delhi's air turns toxic, and everybody already knows the answer:
 > it's the stubble burning up in Punjab.
 >
 > We wanted to prove it. So we built a physical transport model, wrote down our
 > test before we ran it — and it told us something we didn't want to hear."
 
-*(~55 words · 22s)*
-
 ---
 
-## 0:25 – 1:15 · The demo
+## 0:20 – 1:00 · The demo
 
 **Shot:** one play-through at full speed, then scrub back and hold on the count
-frame while you finish the narration. The scrub doubles as proof the timeline is
-interactive. Say nothing the screen is not showing, and **stop talking for the
-last three seconds of the play-through** so the final frame lands in silence.
+frame while you finish. The scrub doubles as proof the timeline is interactive.
+**Stop talking for the last three seconds of the play-through** so the final
+frame lands in silence.
 
 > "This is the air that arrived in Delhi on the morning of the 18th of November,
 > when PM2.5 hit seven hundred micrograms — nearly three times the threshold for
-> 'severe'.
+> severe.
 >
 > We're stepping the recorded wind backwards, fifteen minutes at a time, for
-> forty-eight hours, to reconstruct where that air came from. The faint lines are
-> seven alternative starting points — that spread is our uncertainty.
+> forty-eight hours. The faint lines are seven alternative starting points — that
+> spread is our uncertainty. Every fire that lights up is one this air passed
+> over, and it only lights up once the air reaches it.
 >
-> Every fire that lights up is one this specific air mass passed over, and it only
-> lights up once the air actually reaches it.
->
-> Five hundred kilometres. One thousand three hundred and eighty-four fires. And
-> nearly half the attributed weight lands in a single place: Jalandhar and Moga,
-> in Punjab."
-
-*(~125 words · 50s)*
+> Five hundred kilometres. One thousand three hundred and eighty-four fires.
+> Nearly half the weight in a single place: Jalandhar and Moga, in Punjab."
 
 ---
 
-## 1:15 – 1:40 · How it works
+## 1:00 – 1:40 · Why this matters
 
-**Shot:** hold the finished frame, or scrub slowly back and forth.
+**Shot:** hold on the finished frame, path from Punjab to Delhi still on screen.
+Do not scroll yet. **This beat is the reason the project exists and it has to
+land before any result does.** Do not cut it.
 
-> "This is a Lagrangian back-trajectory — the same class of method NOAA's HYSPLIT
-> model uses. Fire detections are NASA FIRMS at 375 metres. Winds are ERA5
-> reanalysis. Air quality is ground reference monitors. Each fire is weighted by
-> its radiated power and how close it sat to the path, and it only counts if it
-> was burning within twelve hours of the air passing over."
-
-*(~62 words · 25s)*
+> "This question isn't academic. Blaming Delhi's smog on Punjab's burning isn't a
+> debate that happens in journals — it drives enforcement, court directives,
+> fines on individual farmers, every winter.
+>
+> So the accuracy of the attribution is somebody's livelihood. And counting fires
+> is the obvious way to do it: lots of burning upwind, therefore the smoke is
+> theirs.
+>
+> We wanted to know whether that reasoning holds. Because if it doesn't, the cost
+> isn't a wrong number in a paper — it's blame landing on the wrong people, on
+> the wrong day."
 
 ---
 
-## 1:40 – 2:20 · We pre-registered it, and it lost
+## 1:40 – 1:52 · How it works
+
+**Shot:** scrub slowly across the path.
+
+> "Under the hood it's a Lagrangian back-trajectory — the same class of method
+> NOAA's HYSPLIT uses. Fires from NASA FIRMS, winds from ERA5 reanalysis, air
+> quality from ground monitors."
+
+---
+
+## 1:52 – 2:38 · We pre-registered it, and it lost
 
 **Shot:** scroll to the specification grid. Let the four rows sit on screen.
 
-> "One convincing day is not evidence. So we wrote down what would count as
-> success *before* we ran it — four specifications, fixed in advance. In science
-> that's called pre-registering, and it means you can't quietly go looking for the
+> "One convincing day isn't evidence. So we wrote down what would count as
+> success *before* we ran it — four specifications, fixed in advance. That's
+> called pre-registering, and it means you can't quietly go looking for the
 > version that works.
 >
 > We scored it against a deliberately fair opponent: a naive model that just
 > counts all the fire power in the region over the same forty-eight hours. Both
-> models see identical fires. The only difference is that ours knows where the
-> wind went.
+> models see identical fires. Ours also knows where the wind went.
 >
-> We lost. In all four. The naive fire count beat our physics every single time,
-> and our index never reached significance in any of them.
+> We lost. In all four. Our index never reached significance in any of them.
 >
-> That's not a failed project. Knowing that a method *doesn't* work, and being
-> able to say exactly why, is a result — and it's one almost nobody publishes."
-
-*(~140 words · 56s)*
+> That's not a failed project. Knowing that a method doesn't work, and being able
+> to say exactly why, is a result."
 
 ---
 
-## 2:20 – 3:05 · Why — and what beat the baseline too
+## 2:38 – 3:50 · Why — and what it means for the people being blamed
 
-**Shot:** the Nov 18 / Nov 19 two-frame comparison, then the scatter chart.
+**Shot:** the Nov 18 / Nov 19 paired bars, then the scatter chart.
 
-> "Here's why. Look at two consecutive days. On the 19th, the air crossed two and
-> a half times more fires than on the 18th, along a straighter path from the same
+> "Here's why. Two consecutive days. On the 19th the air crossed two and a half
+> times more fires than on the 18th, along a straighter path from the same
 > direction — and Delhi's air was less than half as polluted.
 >
-> Our index counts fires along the path. But how many fires you cross depends on
-> how far the air travelled, and that depends on wind speed — and wind also blows
-> the city clean. We built an index that goes up on exactly the days the pollution
-> gets flushed out.
+> Our index counts fires along the path. But how many you cross depends on how
+> far the air travelled, and that depends on wind speed — and wind also blows the
+> city clean. We built an index that rises on exactly the days the pollution gets
+> flushed out.
 >
-> Then we tested the baseline the same way, and it fell apart too. Its correlation
-> was point five seven, which looks strong. But burning rises and falls across the
-> season, and so does Delhi's smog — so two things that both follow the calendar
-> will track each other beautifully without one causing the other at all. Ask
-> instead whether a change in burning predicts a change in pollution *tomorrow*,
-> and it drops to point zero five. Neither model predicts any individual day.
+> Then we tested the baseline the same way. Its correlation was point five seven.
+> But burning and smog both rise and fall across the season — two things that
+> follow the calendar track each other without either causing the other. Ask
+> whether a *change* in burning predicts a *change* in pollution, and it drops to
+> point zero five.
 >
-> And that matters for what you do about it. On fifteen of our fifty-two days,
-> the air arriving in Delhi hadn't come from the burning belt at all — it came in
-> from the east. If you blame stubble burning on those days, you're sending
-> enforcement four hundred kilometres in the wrong direction."
-
-*(~205 words · 82s)*
+> And this comes back to the farmers. On fifteen of our fifty-two days, our
+> reconstruction says the arriving air hadn't come from the burning belt at all.
+> We're not telling you enforcement was wrong on those days. We're telling you a
+> fire count could never have told you it was right."
 
 ---
 
-## 3:05 – 3:30 · What we actually learned
+## 3:50 – 4:30 · What we actually learned
 
-**Shot:** the limitations section, or back to the hero frame.
+**Shot:** the limitations section, then back to the hero frame for the last line.
 
 > "The interesting part wasn't the model. It was the three times we nearly fooled
-> ourselves.
+> ourselves. A baseline whose reference level was the median of the very window it
+> was meant to precede — circular, and it flattered us. A negative control that
+> looked convincing and died the moment we significance-tested it. And that point
+> five seven, which looked like a real finding until we asked whether it survived
+> removing the season.
 >
-> We caught a baseline whose reference level was the median of the very window it
-> was supposed to precede — circular, and it flattered us. Our own negative
-> control looked convincing at a glance and died the moment we ran an actual
-> significance test on it. And that point-five-seven correlation looked like a
-> real finding for a day, until we asked whether it survived removing the season.
+> That last one is the result. We didn't just fail to find something — we showed
+> the obvious method's apparent skill was an artefact. The calendar, not the
+> physics. That holds whether or not our model had worked.
 >
 > We can't tell you Delhi's smog comes from Punjab. We can tell you exactly why
-> counting upwind fires won't prove it — and that's worth more than a number we
-> couldn't defend."
-
-*(~125 words · 50s)*
-
-**Total: ~735 words ≈ 4:05.**
-
-That is over the 3:30 target and well inside the 5:00 ceiling. If you want it
-back under 3:45, cut §3 (How it works) to two sentences — the README carries
-that detail and no judge decides on it. Do not cut from §4 or §5.
+> counting upwind fires won't prove it."
 
 ---
 
@@ -183,6 +178,7 @@ where to point.
 | "point five seven" | 0.573 | `detrended_comparison.levels.rho_naive` |
 | "point zero five" | 0.052 | `detrended_comparison.first_differences.rho_naive` |
 | "fifteen of our fifty-two days… came in from the east" | 15 of 52 | `negative_control.n_control_days`, bearing sector 45–225° |
+| "it drives enforcement, court directives, fines" | background, not our data | **See the flag below — the one claim in the script not backed by this project.** |
 | "four hundred kilometres in the wrong direction" | 505 km path, NW origin | `episode.path_km`, `episode.origin` |
 
 **Three errors were caught in the first draft of this script** and are fixed
@@ -208,3 +204,29 @@ above. Recording the draft version would have put false numbers in the video:
 - Rehearse twice. Record the second take and the third; keep the third.
 - The animation runs 22 seconds. For §2 you will need roughly two play-throughs,
   or one play plus a slow scrub — plan which before you hit record.
+
+---
+
+## The one claim in this script that our data does not support
+
+> *"It drives enforcement, court directives, fines on individual farmers, every
+> winter."*
+
+This is background context about how stubble-burning attribution is used in
+India. **We did not measure it, and nothing in this repository evidences it.**
+It is included because it is the reason the accuracy of the method matters, and
+it is widely reported — but if a judge asks "how do you know that?", the honest
+answer is "that's context, not our finding; our finding starts at the next
+sentence."
+
+Two guards keep the rest of the beat defensible:
+
+- We say **"our reconstruction says"** the air came from the east on 15 of 52
+  days — attributing it to the model, not asserting it as ground truth.
+- We explicitly say **"we're not telling you enforcement was wrong on those
+  days."** The claim is bounded to what a fire count can and cannot support.
+  Do not let this drift in the recording into "enforcement is misdirected."
+
+If you would rather not carry the background claim at all, the beat still works
+with it removed — cut to *"a fire count is the obvious way to do it"* and the
+argument survives, just with less weight behind why accuracy matters.
