@@ -36,13 +36,14 @@ lands in silence.
 >
 > We're stepping the recorded wind backwards, fifteen minutes at a time, for
 > forty-eight hours, to reconstruct where that air came from. The faint lines are
-> eight alternative starting points — that spread is our uncertainty.
+> seven alternative starting points — that spread is our uncertainty.
 >
 > Every fire that lights up is one this specific air mass passed over, and it only
 > lights up once the air actually reaches it.
 >
-> Five hundred kilometres. One thousand three hundred and eighty-four fires.
-> Half of them in one place: Jalandhar and Moga, in Punjab."
+> Five hundred kilometres. One thousand three hundred and eighty-four fires. And
+> nearly half the attributed weight lands in a single place: Jalandhar and Moga,
+> in Punjab."
 
 *(~125 words · 50s)*
 
@@ -109,10 +110,10 @@ lands in silence.
 > ourselves.
 >
 > We caught a baseline whose reference level was the median of the very window it
-> was supposed to precede — circular, and it flattered us. We found our own
-> negative control looked convincing at a glance and died the moment we ran an
-> actual significance test on it. And we kept the baseline's lookback window
-> locked to ours, because shrinking it would have handed us a win we hadn't earned.
+> was supposed to precede — circular, and it flattered us. Our own negative
+> control looked convincing at a glance and died the moment we ran an actual
+> significance test on it. And that point-five-seven correlation looked like a
+> real finding for a day, until we asked whether it survived removing the season.
 >
 > We can't tell you Delhi's smog comes from Punjab. We can tell you exactly why
 > counting upwind fires won't prove it — and that's worth more than a number we
@@ -139,13 +140,41 @@ above — they are the versions we deliberately did **not** write.
 | "We proved the naive baseline is wrong" | We showed its levels correlation is seasonal. That is narrower. |
 | "Wind ventilates the city, lowering PM2.5" | ρ = −0.246, p = 0.079. Suggestive, not significant. |
 
-Two lines in the script that are load-bearing and **are** defensible, in case you
-are challenged:
+### Every number in the script, and where it comes from
 
-- **"We lost in all four."** Verifiable in `season.json → specification_grid`;
-  all four `smoke_wins` are false, all four `p_smoke` ≥ 0.066.
-- **"It drops to point zero five."** `detrended_comparison.first_differences`,
-  naive ρ = 0.052, p = 0.71.
+Checked line by line against `docs/data/`. If a judge challenges one, this is
+where to point.
+
+| Spoken | Value | Source |
+|---|---|---|
+| "seven hundred micrograms" | 700.0 | `episode.pm25_peak` |
+| "nearly three times the threshold for severe" | 700 ÷ 250 = 2.8× | CPCB severe band is >250 µg/m³ |
+| "fifteen minutes at a time" | 900 s | `config.TRAJECTORY_DT_SECONDS` |
+| "forty-eight hours" | 48 | `config.TRAJECTORY_HOURS_BACK` |
+| "seven alternative starting points" | 8 members, 1 unperturbed | `config.ENSEMBLE_SIZE` |
+| "five hundred kilometres" | 504.9 km | `episode.path_km` |
+| "one thousand three hundred and eighty-four fires" | 1,384 | `episode.fires_attributed` |
+| "nearly half the attributed weight… Jalandhar and Moga" | 48.9% of weight | `episode.attribution[0].share` |
+| "375 metres" | VIIRS resolution | NASA FIRMS |
+| "twelve hours" | ±12 h | `config.FIRE_TIME_TOLERANCE_HOURS` |
+| "we lost in all four" | all `smoke_wins` false, all `p_smoke` ≥ 0.066 | `specification_grid` |
+| "two and a half times more fires" | 3,336 ÷ 1,321 = 2.53× | `ventilation_paradox` |
+| "less than half as polluted" | 255.8 ÷ 644.0 = 40% | `ventilation_paradox` |
+| "point five seven" | 0.573 | `detrended_comparison.levels.rho_naive` |
+| "point zero five" | 0.052 | `detrended_comparison.first_differences.rho_naive` |
+
+**Three errors were caught in the first draft of this script** and are fixed
+above. Recording the draft version would have put false numbers in the video:
+
+1. *"Eight alternative starting points"* — there are eight ensemble members, but
+   one is the unperturbed primary, so only **seven** are alternatives.
+2. *"1,384 fires… half of them in one place"* — Jalandhar–Moga is 48.9% of the
+   **weighted** attribution but only 349 fires, or **25%** of the count. Saying
+   "half of them" straight after the fire count asserts something false.
+3. *"The three times we nearly fooled ourselves"* originally listed keeping the
+   baseline window coupled. That was a trap **avoided by design**, not a
+   near-miss, so it was replaced with the seasonal correlation — which genuinely
+   did look like a finding until it was differenced.
 
 ---
 
