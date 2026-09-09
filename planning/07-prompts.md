@@ -1,5 +1,13 @@
 # Prompts — scratch to submission
 
+> **What this file is.** This project was built with AI assistance (Claude), and
+> this is the working prompt sequence we used, kept in the repo as part of the
+> process record rather than tidied away. The physics, the statistics and every
+> decision about what to claim were reviewed and argued over by us; the analysis
+> that produced the headline null is reproducible from `pipeline/run_all.py` and
+> pinned by 51 unit tests. We would rather show the method than imply there
+> wasn't one.
+
 Copy these in order. Each one produces a specific artefact and has a check attached.
 Do not run ahead: several prompts depend on real numbers from the previous step, and
 guessing them will produce code that fits data you do not have.

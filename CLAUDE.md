@@ -20,17 +20,32 @@ The claim that wins the hackathon is one sentence:
 
 Everything in this repo exists to support that sentence or to show it on screen.
 
-## Current state
+## Current state — complete and deployed
 
 | Component | State |
 |---|---|
 | `pipeline/windfield.py`, `pipeline/trajectory.py` | Done. 26/26 tests pass. |
 | `pipeline/attribution.py` | Done. 25/25 tests pass. |
-| `pipeline/fetch_*.py` | Written, **never executed** — need API keys + network. |
-| `verify_day1.py` | Written, **not yet run**. This is the gate. |
-| `pipeline/validate.py` | Not written. Day 3. Needs real data first. |
-| `pipeline/export.py` | Not written. Day 4. |
-| `docs/` site + animation | Not written. Days 4-5. |
+| `pipeline/fetch_*.py` | Done. All three sources fetched and cached. |
+| `verify_day1.py` | Run. 14 passed, 0 warnings, 0 blocking. |
+| `pipeline/validate.py` | Done. Season-wide comparison + specification grid. |
+| `pipeline/export.py` | Done. Writes `docs/data/*.json`. |
+| `pipeline/run_all.py` | Done. Thin orchestrator over all five stages. |
+| `docs/` site + animation | Done and deployed to GitHub Pages. |
+
+**Live:** https://hackathons-4thyear.github.io/NextStep/
+
+## The result, so nobody re-derives it
+
+The headline is a **null**, and it is deliberate. Neither the wind-aware
+trajectory index nor the naive fire count explains day-to-day variation in
+Delhi's PM2.5. The naive baseline's apparent levels correlation (ρ = 0.573)
+is seasonal co-trending and collapses to ρ = 0.052 under first differencing.
+
+Do not "fix" this by searching for a specification that wins. The four-cell
+grid was pre-registered and all four are reported. See `planning/08-findings.md`
+for what is and is not statistically supported, and the README section
+"Claims we could have made, and didn't".
 
 ## Rules for this repo
 

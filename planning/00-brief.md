@@ -2,7 +2,6 @@
 
 **Hackathon:** NextStep Hacks 2026 (HackAlphaX), theme *Earth Forward*
 **Deadline:** Sep 14 2026, 02:30 GMT+5:30 — effective working deadline **Sep 13, evening**
-**Target:** 1st place
 
 ---
 
@@ -62,16 +61,6 @@ are built.
   (roughly 6–24 hours depending on distance), not at zero lag. If the lag is physically sensible,
   say so — it is strong evidence the model is capturing real transport.
 
-## How this maps to the six judging criteria
-
-| Criterion | How this project scores |
-|---|---|
-| **Originality** | Attribution rather than measurement. Reframes the whole pollution category in one sentence. |
-| **Adherence to track** | Targets pollution reduction at the only point where reduction is possible — the source. Locally grounded, which the theme statement explicitly encourages. |
-| **Completion** | No model training. Data joins plus a physics loop. A working end-to-end version is genuinely finishable in the time available. |
-| **Learning** | Atmospheric back-trajectory modelling is real, named, and nothing like a tutorial project. Explain it in one sentence: follow the wind backwards and see what it crossed. |
-| **Design** | Animated trajectory crawling backwards across terrain, fires igniting beneath it, PM2.5 gauge climbing. Needs no explanation. See `05-animation-spec.md`. |
-| **Technology** | A physical transport model with a quantified baseline comparison — not a call to a classifier. |
 
 ## Scope discipline
 

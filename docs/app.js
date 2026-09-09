@@ -39,6 +39,12 @@ const RUNTIME = BEATS.hold[1];
 const TRAIL_SECONDS = 9000;    // 2.5h bright head
 const BLOOM_SECONDS = 5400;    // fires bloom briefly as the air passes
 
+/* Minimum fires crossed before the attribution ledger will rank anything.
+   With one fire crossed the panel reads "100.0%" for whichever cell it landed
+   in, which at the opening frame put a region across an international border
+   at the top of a list about Punjab. */
+const LEDGER_MIN_FIRES = 20;
+
 /* CPCB PM2.5 sub-index breakpoints (µg/m³). */
 const AQI = [
   { max: 30,       name: "Good",         css: "--aqi-1" },
@@ -305,7 +311,14 @@ function updateChrome(s) {
     by.set(f.district, (by.get(f.district) || 0) + w);
     total += w;
   }
-  const rows = [...by.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  // Below a handful of fires the shares are noise: one detection reads as
+  // "100.0%" and, at the opening frame, named a region on the wrong side of a
+  // border as the sole source. Hold the panel until there is enough crossed to
+  // rank honestly.
+  const rows = lit.length < LEDGER_MIN_FIRES
+    ? []
+    : [...by.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+
   $("ledger").innerHTML = rows.length
     ? rows.map(([name, w]) => {
         const pct = total > 0 ? (w / total) * 100 : 0;
@@ -314,7 +327,9 @@ function updateChrome(s) {
           <div class="bar"><span style="width:${pct.toFixed(1)}%"></span></div>
         </li>`;
       }).join("")
-    : '<li class="empty">Nothing crossed yet.</li>';
+    : `<li class="empty">${lit.length
+          ? "Too few crossed yet to rank sources."
+          : "Nothing crossed yet."}</li>`;
 
   if (!state.scrubbing) {
     $("scrub").value = String(Math.round((state.clock / RUNTIME) * 1000));

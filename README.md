@@ -114,9 +114,24 @@ less than half the pollution.
 
 **1. Fires.** NASA FIRMS VIIRS detections (375 m) from both SNPP and NOAA-20
 science-quality products across the season. Filtered to nominal/high confidence,
-deduplicated, and screened for persistent industrial thermal anomalies by dropping
-grid cells that burn on most days — refineries and flares, not fields. 95,055 raw
-detections reduce to 85,127 usable ones.
+deduplicated, and screened for persistent thermal anomalies by dropping grid
+cells active on more than 60% of days. 95,055 raw detections reduce to 85,127
+usable ones.
+
+We checked what the mask actually removes rather than assuming. The 13 masked
+cells (887 detections, 1.0% of the data) have a signature sharply distinct from
+agricultural burning:
+
+| | masked cells | Punjab burning belt |
+|---|---|---|
+| Median FRP | **1.2 MW** | 4.0 MW |
+| 95th-percentile FRP | 2.9 MW | 13.4 MW |
+| Detected at night | **97%** | 3% |
+| Active across | all 52 days | the burning window |
+
+Low power, almost exclusively night-detected, burning all season — that is a
+persistent low-output heat source, not stubble. **We are not claiming to have
+identified any of them specifically**; we can say what they are not.
 
 **2. Wind.** Hourly ERA5 reanalysis at 100 m via Open-Meteo, on a 0.5° grid
 (27 × 30 points) across the domain. Meteorological direction is converted to
@@ -182,6 +197,23 @@ Stated by us, because they are real.
   individual fire.**
 - **Source regions are named by nearest towns**, not by a district boundary join.
   A 1° grid cell is labelled from the towns inside it.
+- **Our persistent-source mask is under-inclusive, and we found this by checking
+  it.** The 60%-of-days threshold is arbitrary, and the same signature continues
+  below it: cells active on 26–30 days (9 of them), 21–25 days (13), and 11–20
+  days (36) all show median FRP of 0.8–1.0 MW and 98–100% night detection —
+  indistinguishable from the cells we removed. So roughly 58 further cells of
+  persistent non-agricultural heat remain in the data. The effect on results is
+  small, because these sources carry ~1 MW against a burning belt of 21,905
+  detections at 4 MW median, but the filter is drawing an arbitrary line through
+  a continuous population. **Filtering on the signature itself — low FRP plus
+  night-only detection — would be the correct fix, and we did not do it.**
+- **First differencing removes lagged signal by construction.** Our headline test
+  correlates day-over-day changes, which is the right way to strip shared
+  seasonality — but it also suppresses any relationship that operates with a
+  delay, and transport is a delayed process. We ran the lag sweep on levels only,
+  not on the differenced series, so we cannot rule out a lagged day-to-day
+  relationship that our primary test is structurally blind to. This is a known
+  property of the method rather than a bug, and it bounds what our null means.
 
 ## Claims we could have made, and didn't
 
