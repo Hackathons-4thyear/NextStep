@@ -1,0 +1,34 @@
+{
+  "target": "punjab-delhi",
+  "receptor": {
+    "name": "Delhi",
+    "lat": 28.6139,
+    "lon": 77.209
+  },
+  "bbox": {
+    "west": 67.5,
+    "south": 24.0,
+    "east": 82.0,
+    "north": 37.0
+  },
+  "season": {
+    "start": "2024-10-10",
+    "end": "2024-11-30"
+  },
+  "model": {
+    "trajectory_hours_back": 48,
+    "dt_seconds": 900,
+    "wind_level": "100m",
+    "corridor_radius_km": 30.0,
+    "fire_time_tolerance_hours": 12.0,
+    "ensemble_size": 8,
+    "naive_window_hours": 48
+  },
+  "attribution_text": "We acknowledge the use of data and/or imagery from NASA's Fire Information for Resource Management System (FIRMS), part of NASA's Earth Observing System Data and Information System (EOSDIS).",
+  "sources": [
+    "NASA FIRMS (VIIRS SNPP + NOAA-20, science-quality)",
+    "Open-Meteo ERA5 reanalysis, 100 m wind",
+    "OpenAQ v3 ground PM2.5",
+    "Natural Earth admin-1 boundaries"
+  ]
+}

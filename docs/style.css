@@ -1,0 +1,372 @@
+/* Smoke Forensics — see planning/05-animation-spec.md.
+   One contrast carries the whole design: cool moving air against hot static
+   sources. Nothing else is allowed to be colourful. */
+
+:root {
+  --ground:      #16202E;
+  --ground-line: #24334A;
+  --air:         #9FD9F2;
+  --air-lead:    #FFFFFF;
+  --fire:        #FF8A3D;
+  --ink:         #E8EDF2;
+  --ink-quiet:   #8C9AAB;
+
+  /* CPCB AQI ramp. Used for the PM2.5 readout and nowhere else. */
+  --aqi-1: #55A84B;
+  --aqi-2: #A3C853;
+  --aqi-3: #FFF833;
+  --aqi-4: #F29C33;
+  --aqi-5: #E93F33;
+  --aqi-6: #AF2D24;
+
+  --rail: 300px;
+  --rail-r: 264px;
+  --wrap: 940px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Mono is reserved for numerals that change while the animation runs.
+   Proportional digits visibly jitter as they tick; tabular ones do not.
+   Do not extend this to static labels. */
+.num {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
+
+a { color: var(--air); }
+
+:focus-visible {
+  outline: 2px solid var(--air);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------- stage */
+
+.stage {
+  position: relative;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  background: var(--ground);
+}
+
+#map { position: absolute; inset: 0; }
+#map canvas { display: block; }
+
+/* Panels sit flush to the viewport edges and share the map's ground colour,
+   so they read as instrument surfaces rather than floating cards. */
+.rail {
+  position: absolute;
+  top: 0;
+  bottom: 84px;
+  width: var(--rail);
+  padding: 28px 24px;
+  background: rgba(22, 32, 46, .94);
+  overflow: hidden;
+}
+
+.rail-left  { left: 0;  border-right: 1px solid var(--ground-line); }
+.rail-right { right: 0; width: var(--rail-r); border-left: 1px solid var(--ground-line); }
+
+.rail h1 {
+  margin: 0 0 14px;
+  font-size: 30px;
+  line-height: 1.12;
+  letter-spacing: -.015em;
+  font-weight: 600;
+}
+
+.standfirst {
+  margin: 0 0 26px;
+  font-size: 14px;
+  color: var(--ink-quiet);
+  max-width: 34ch;
+}
+
+.rail h2 {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.rail .hint {
+  margin: 0 0 14px;
+  font-size: 12.5px;
+  color: var(--ink-quiet);
+  max-width: 32ch;
+}
+
+/* ------------------------------------------------------------- narration */
+
+.narration {
+  position: absolute;
+  left: calc(var(--rail) + 40px);
+  top: 32px;
+  max-width: 30ch;
+  font-size: 19px;
+  line-height: 1.4;
+  color: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.narration.on { opacity: 1; }
+
+/* ------------------------------------------------------------- pm gauge */
+
+.gauge-label { font-size: 13px; color: var(--ink-quiet); margin-bottom: 6px; }
+
+.gauge-value {
+  font-size: 46px;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.gauge-value .unit {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-quiet);
+  margin-left: 7px;
+}
+
+/* The band name is set in --ink, not in the ramp colour. Several AQI hues
+   fail WCAG AA as text on this ground (#AF2D24 "Severe" is 2.52:1), and that
+   is the band the gauge sits in for most of the run. The swatch carries the
+   colour; the word carries the meaning. */
+.aqi-band {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.aqi-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex: none;
+}
+
+.gauge-track {
+  position: relative;
+  height: 8px;
+  margin: 12px 0 6px;
+  border-radius: 4px;
+  background: linear-gradient(90deg,
+    var(--aqi-1) 0%, var(--aqi-1) 8%,
+    var(--aqi-2) 8%, var(--aqi-2) 17%,
+    var(--aqi-3) 17%, var(--aqi-3) 30%,
+    var(--aqi-4) 30%, var(--aqi-4) 42%,
+    var(--aqi-5) 42%, var(--aqi-5) 60%,
+    var(--aqi-6) 60%, var(--aqi-6) 100%);
+}
+
+.gauge-needle {
+  position: absolute;
+  top: -4px;
+  width: 2px;
+  height: 16px;
+  background: var(--ink);
+  left: 0;
+}
+
+.gauge-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: var(--ink-quiet);
+}
+
+.spark { margin-top: 20px; }
+
+.spark svg { display: block; width: 100%; height: 46px; overflow: visible; }
+
+.spark-cap { margin: 6px 0 0; font-size: 11px; color: var(--ink-quiet); }
+
+.readout { margin: 24px 0 0; display: grid; grid-template-columns: 1fr auto; gap: 9px 12px; }
+.readout dt { font-size: 12.5px; color: var(--ink-quiet); }
+.readout dd { margin: 0; font-size: 12.5px; text-align: right; }
+
+/* --------------------------------------------------------------- ledger */
+
+.ledger { margin: 0; padding: 0; list-style: none; }
+.ledger li { margin-bottom: 12px; font-size: 12.5px; }
+.ledger .row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.ledger .pct { color: var(--fire); }
+.ledger .bar { height: 4px; background: var(--ground-line); border-radius: 2px; }
+.ledger .bar span { display: block; height: 100%; background: var(--fire); border-radius: 2px; }
+.ledger .empty { color: var(--ink-quiet); }
+
+/* ------------------------------------------------------------- timeline */
+
+.timeline {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 84px;
+  padding: 16px 24px;
+  background: rgba(22, 32, 46, .94);
+  border-top: 1px solid var(--ground-line);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.timeline button {
+  min-width: 78px;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--ground-line);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#scrub { width: 100%; accent-color: var(--air); cursor: pointer; }
+
+.tl-meta {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-quiet);
+  margin-top: -6px;
+}
+
+.legend { display: flex; gap: 18px; align-items: center; }
+
+/* Size and shape carry the distinction, not colour alone. */
+.key { display: inline-flex; align-items: center; gap: 7px; }
+.key i { display: inline-block; border-radius: 50%; }
+.key .k-att { width: 11px; height: 11px; background: var(--fire); }
+.key .k-ctx { width: 5px;  height: 5px;  background: var(--ground-line); border: 1px solid var(--ink-quiet); }
+/* Ensemble members are launched from slightly offset points and times, so
+   they finish near Delhi rather than exactly on it. Without a label the fan
+   past the city reads as the path carrying on beyond the receptor. */
+.key .k-ens { width: 14px; height: 0; border-radius: 0; border-top: 1px solid var(--air); opacity: .5; }
+
+/* ------------------------------------------------------------- findings */
+
+.findings { padding: 88px 28px 40px; }
+
+.findings h2 {
+  font-size: 27px;
+  margin: 0 0 18px;
+  letter-spacing: -.01em;
+  font-weight: 600;
+}
+
+.findings h3 {
+  font-size: 19px;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.block { max-width: 66ch; margin: 0 auto 52px; }
+
+.block.rule { padding-top: 34px; border-top: 1px solid var(--ground-line); }
+
+.findings p { color: var(--ink-quiet); }
+
+.lede { font-size: 18px; color: var(--ink); }
+
+blockquote {
+  margin: 0 0 22px;
+  padding: 22px 24px;
+  background: rgba(159, 217, 242, .05);
+  border-left: 2px solid var(--air);
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.tag {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 3px 9px;
+  font-size: 11.5px;
+  border: 1px solid var(--ground-line);
+  border-radius: 3px;
+  color: var(--ink-quiet);
+}
+
+.tag.exploratory { border-color: var(--fire); color: var(--fire); }
+
+.twoframe { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+
+.frame { padding: 18px; border: 1px solid var(--ground-line); }
+.frame .date { font-size: 12px; color: var(--ink-quiet); }
+.frame .big { font-size: 32px; font-weight: 600; line-height: 1.1; margin: 8px 0 2px; }
+.frame .cap { font-size: 12px; color: var(--ink-quiet); }
+.frame ul { margin: 14px 0 0; padding: 0; list-style: none; font-size: 12.5px; }
+.frame li { display: flex; justify-content: space-between; padding: 5px 0; border-top: 1px solid var(--ground-line); }
+.frame li span:first-child { color: var(--ink-quiet); }
+
+.chart { margin: 24px 0; }
+.chart svg { display: block; width: 100%; height: auto; }
+.chart figcaption { margin-top: 10px; font-size: 13px; color: var(--ink-quiet); }
+
+.tablewrap { overflow-x: auto; margin: 22px 0; }
+
+table.grid { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+table.grid th, table.grid td {
+  padding: 9px 10px;
+  text-align: right;
+  border-bottom: 1px solid var(--ground-line);
+  white-space: nowrap;
+}
+
+table.grid th { color: var(--ink-quiet); font-weight: 500; }
+table.grid th:first-child, table.grid td:first-child { text-align: left; }
+table.grid tr.primary td { background: rgba(159, 217, 242, .06); }
+table.grid .ns { color: var(--ink-quiet); }
+
+footer { padding: 30px 28px 80px; color: var(--ink-quiet); font-size: 12px; }
+footer p { max-width: 66ch; }
+.credit { margin-top: 16px; }
+
+/* ------------------------------------------------------------ responsive */
+
+@media (max-width: 1180px) {
+  :root { --rail: 264px; --rail-r: 232px; }
+  .narration { left: calc(var(--rail) + 28px); font-size: 17px; }
+}
+
+@media (max-width: 900px) {
+  .stage { height: auto; min-height: 0; }
+  #map { position: relative; height: 58vh; }
+  .rail, .timeline { position: static; width: auto; bottom: auto; border: 0; border-top: 1px solid var(--ground-line); }
+  .rail { padding: 24px 20px; }
+  .narration { display: none; }
+  .twoframe { grid-template-columns: 1fr; }
+}
+
+/* Reduced motion: the completed final state, no autoplay. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .narration { transition: none; }
+}

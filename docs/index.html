@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smoke Forensics — tracing Delhi's air back to the fires it crossed</title>
+<meta name="description" content="A Lagrangian back-trajectory reconstruction of the air arriving in Delhi during the November 2024 stubble-burning season, and an honest test of whether fire counts explain the pollution.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main>
+<section class="stage">
+  <div id="map" role="img" aria-label="Animated map of northern India showing the reconstructed path of air arriving in Delhi on 18 November 2024, with satellite fire detections igniting as the path passes over them."></div>
+
+  <p class="narration" id="narration" aria-live="polite"></p>
+
+  <div class="rail rail-left">
+    <h1>Where did this air come from?</h1>
+    <p class="standfirst" id="standfirst">
+      On 18 November 2024, PM2.5 in Delhi reached 700&nbsp;µg/m³ — after two
+      days that never once fell out of the &ldquo;very poor&rdquo; band. We step
+      the recorded wind backwards, hour by hour, to reconstruct the path that
+      air travelled, and find the fires it crossed on the way.
+    </p>
+    <h2>Sources the air crossed</h2>
+    <p class="hint">Areas the reconstructed path passed over, weighted by fire
+      power and by distance from the path.</p>
+    <ol class="ledger" id="ledger"></ol>
+  </div>
+
+  <div class="rail rail-right">
+    <p class="gauge-label">PM2.5 measured in Delhi</p>
+    <p class="gauge-value"><span class="num" id="pm-value">—</span><span class="unit">µg/m³</span></p>
+    <p class="aqi-band"><i class="aqi-dot" id="aqi-dot"></i><span id="aqi-band">&nbsp;</span></p>
+    <div class="gauge-track" role="img" aria-label="Air quality scale from good to severe">
+      <div class="gauge-needle" id="pm-needle"></div>
+    </div>
+    <div class="gauge-scale"><span>Good</span><span>Severe</span></div>
+
+    <div class="spark">
+      <svg id="spark" viewBox="0 0 220 46" preserveAspectRatio="none"
+           role="img" aria-label="PM2.5 measured across the 48 hours before the air arrived"></svg>
+      <p class="spark-cap">Measured across the traced window</p>
+    </div>
+
+    <dl class="readout">
+      <dt>Tracing back</dt><dd class="num" id="r-back">—</dd>
+      <dt>Air travelled</dt><dd class="num" id="r-path">—</dd>
+      <dt>Fires crossed</dt><dd class="num" id="r-fires">—</dd>
+      <dt>Origin</dt><dd class="num" id="r-origin">—</dd>
+    </dl>
+  </div>
+
+  <div class="timeline">
+    <button id="play" aria-label="Pause the animation">Pause</button>
+    <input type="range" id="scrub" min="0" max="1000" value="0"
+           aria-label="Scrub through the 48 hours before arrival">
+    <span class="legend">
+      <span class="key"><i class="k-att"></i> crossed by this air</span>
+      <span class="key"><i class="k-ctx"></i> burning, not crossed</span>
+      <span class="key"><i class="k-ens"></i> nearby start points, all ending at Delhi</span>
+    </span>
+    <div class="tl-meta">
+      <span class="num" id="clock">—</span>
+      <span id="tl-note">48 hours before arrival → the moment the air reached Delhi</span>
+    </div>
+  </div>
+</section>
+
+<section class="findings">
+
+  <div class="block">
+    <h2>Does this hold up across the whole season?</h2>
+    <p class="lede" id="headline">—</p>
+    <p>
+      One convincing episode is not evidence. We ran the same reconstruction on
+      every day of the season and scored it against a deliberately fair
+      opponent: a naive count of all fire power in the region over the same
+      48&nbsp;hours, which knows nothing about wind. Both models see identical
+      fires. The only difference is whether they know where the air went.
+    </p>
+  </div>
+
+  <div class="block rule">
+    <span class="tag">Result</span>
+    <h3>The baseline was tracking the calendar</h3>
+    <p>
+      The naive fire count appeared to win decisively on raw levels. It does not
+      survive removing the seasonal trend.
+    </p>
+    <div class="tablewrap"><table class="grid" id="detrend"></table></div>
+    <p>
+      Burning rises and falls across the season; so does Delhi's PM2.5. An index
+      that tracks that shared shape scores well on levels without predicting any
+      individual day. Correlate day-over-day <em>changes</em> instead, and both
+      models fall to zero. The warning sign was visible beforehand: enlarging
+      the fire region lifted the baseline from 0.300 to 0.573 while giving it no
+      new physics at all.
+    </p>
+  </div>
+
+  <div class="block rule">
+    <span class="tag">Result</span>
+    <h3>Every specification, fixed before we looked</h3>
+    <p>
+      Four combinations, written down before the numbers existed. The
+      ventilation correction is applied to <em>both</em> models — if ventilation
+      is what matters, the baseline is entitled to it too.
+    </p>
+    <div class="tablewrap"><table class="grid" id="grid"></table></div>
+    <p id="grid-note">—</p>
+  </div>
+
+  <div class="block rule">
+    <span class="tag">Result</span>
+    <h3>Why the index fails: it measures wind, not smoke</h3>
+    <figure class="chart">
+      <svg id="confound-chart" viewBox="0 0 640 300" role="img"
+           aria-label="Scatter plot of how far the air travelled against the PM2.5 that arrived, one point per day, sized by the number of fires crossed. Days where the air travelled furthest and crossed the most fires are not the most polluted days."></svg>
+      <figcaption id="chart-cap">—</figcaption>
+    </figure>
+    <div class="tablewrap"><table class="grid" id="confound"></table></div>
+    <p id="confound-note">—</p>
+  </div>
+
+  <div class="block rule">
+    <span class="tag exploratory">Exploratory — not a result</span>
+    <h3>Two days that show the problem</h3>
+    <p>
+      An illustration, not evidence: two specific days, described accurately.
+      Nothing is inferred from a sample of two.
+    </p>
+    <div class="twoframe" id="twoframe"></div>
+    <p id="twoframe-note">—</p>
+  </div>
+
+  <div class="block rule">
+    <span class="tag exploratory">Exploratory — not a result</span>
+    <h3>Signals that point the right way but do not reach significance</h3>
+    <p>
+      These are the patterns we would want to be true. At 52 days none of them
+      clears the bar, and we are listing them here rather than in the results
+      above for exactly that reason.
+    </p>
+    <div class="tablewrap"><table class="grid" id="explore"></table></div>
+    <p id="explore-note">—</p>
+  </div>
+
+  <div class="block rule">
+    <h2>What we are claiming</h2>
+    <blockquote id="claim">—</blockquote>
+    <p id="bound">—</p>
+    <p>
+      This is a null result, and it is the useful one. A project that reported
+      the levels correlation and stopped would have published a number with no
+      day-to-day content in it. What the work does establish is why a
+      fire-counting index fails, which is a reusable warning for anyone building
+      the same thing.
+    </p>
+  </div>
+
+</section>
+</main>
+
+<footer>
+  <p id="method">—</p>
+  <p class="credit" id="nasa">—</p>
+</footer>
+
+<script src="https://unpkg.com/deck.gl@9.0.36/dist.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

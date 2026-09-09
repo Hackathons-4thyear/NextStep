@@ -1,0 +1,15 @@
+# Core pipeline
+numpy>=1.26
+pandas>=2.1
+scipy>=1.11
+requests>=2.31
+pyarrow>=14.0          # parquet caching
+python-dotenv>=1.0     # reads .env
+
+# Plotting for Day 1-3 validation (not needed by the site)
+matplotlib>=3.8
+
+# Optional: district boundary joins.
+# If installing geopandas costs you more than ~20 minutes, skip it. The
+# pipeline falls back to grid labels automatically. See the cut list.
+# geopandas>=0.14
