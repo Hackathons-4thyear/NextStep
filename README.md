@@ -118,8 +118,8 @@ they know where the wind went. Shrinking that window would have manufactured a w
 ## Reproduce it
 
 ```bash
-git clone <this repo>
-cd smoke-forensics
+git clone https://github.com/Hackathons-4thyear/NextStep.git
+cd NextStep
 pip install -r requirements.txt
 cp .env.example .env          # then add your two free API keys
 python verify_day1.py         # fetches everything, prints a go/no-go verdict
