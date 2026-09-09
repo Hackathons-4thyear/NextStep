@@ -4,7 +4,7 @@
 transport model to find out, pre-registered the test, and it said no — or rather,
 it said nobody has shown it yet, including us.**
 
-🔗 **Live demo:** _(add the GitHub Pages URL here)_
+🔗 **Live demo: https://hackathons-4thyear.github.io/NextStep/**
 
 ---
 
@@ -159,6 +159,26 @@ Stated by us, because they are real.
   individual fire.**
 - **Source regions are named by nearest towns**, not by a district boundary join.
   A 1° grid cell is labelled from the towns inside it.
+
+## Claims we could have made, and didn't
+
+Each of these is a sentence this project could have written, and several of them
+are what we expected to be writing when we started. Each is followed by the
+statistic that killed it.
+
+| Claim we didn't make | What killed it |
+|---|---|
+| "Delhi's smog comes from Punjab's burning." | Our own pre-registered test failed to show it: wind-aware ρ = 0.079, p = 0.58, and it lost in all four specifications. |
+| "These 1,384 fires caused the pollution." | Attribution establishes *passage*, not causation. Across the season, fires crossed against PM2.5 is ρ = 0.103, p = 0.47. |
+| "Attribution works on coherent-transport days." | ρ = +0.184 on those 34 days, p = 0.30. The sign is right; the evidence isn't there. |
+| "Days when the air came from a direction with no fires were cleaner." | 129.8 vs 171.5 µg/m³ looks convincing. Mann-Whitney on n = 15 vs 37 gives **p = 0.21**. |
+| "Wind ventilates the city, so it lowers PM2.5." | ρ = −0.246, p = 0.079. Suggestive, and not significant. |
+| "We proved the naive fire count is wrong." | Narrower than that: we showed its *levels* correlation is seasonal co-trending (0.573 → 0.052 differenced). It may still be right for reasons we cannot test at n = 52. |
+| "There is no relationship between fires and Delhi's air." | Overclaims a null. The 95% interval on the differenced correlation spans about ±0.32 — a strong effect is excluded, a modest one is not. |
+
+The first four are the ones that cost something to give up. The directional
+negative control in particular was described in our own working notes as the
+strongest surviving evidence, right up until we ran a significance test on it.
 
 ## What we would do next
 
