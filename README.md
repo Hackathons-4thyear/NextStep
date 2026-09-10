@@ -21,6 +21,16 @@ tracks the calendar scores well without predicting a single day. **That is the
 finding, and it is about the method rather than about us** — it holds however
 good your trajectory model is.
 
+**The obvious objection is that differencing destroys the signal.** Correlating
+day-over-day changes strips shared seasonality, but it also damps anything that
+operates with a delay — and transport *is* delayed, so the null could have been
+an artefact of our own test. We checked: sweeping lags 0–48 h on the differenced
+series, **no lag reaches significance for either model** (0 of 25; the
+wind-aware index peaks at 6 h with ρ = 0.169, p = 0.24). That is a null on a
+null — it does not show there is nothing there, only that the missing signal
+isn't hiding at a lag. It is the sharpest objection available to this result,
+and it is the one we ran hardest at.
+
 Getting here meant killing five claims we wanted to make. They are listed below,
 each with the statistic that killed it.
 

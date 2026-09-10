@@ -676,6 +676,26 @@ function renderFindings() {
      apparent advantage on raw levels (ρ&nbsp;=&nbsp;${lv.rho_naive.toFixed(3)})
      is seasonal co-trending.`;
 
+  // The sharpest objection to this result is that differencing damps delayed
+  // relationships, and transport is delayed — so the null could be an artefact
+  // of our own test. It belongs on the first screen next to the collapse, not
+  // buried in a limitations list.
+  const dl = season.differenced_lag_sweep || [];
+  const nSig = dl.filter((r) => r.p_smoke < 0.05 || r.p_naive < 0.05).length;
+  const best = dl.length
+    ? dl.reduce((a, b) => (b.rho_smoke > a.rho_smoke ? b : a)) : null;
+  if (best) {
+    $("lagcheck").innerHTML =
+      `<strong>Doesn't differencing just destroy the signal?</strong> It damps
+       anything with a delay — and transport is delayed, so this null could have
+       been an artefact of our own test. We swept lags 0–48 h on the differenced
+       series: <strong>${nSig} of ${dl.length} lags reach significance</strong>
+       for either model, the wind-aware index peaking at ${best.lag_h} h with
+       ρ&nbsp;=&nbsp;${best.rho_smoke.toFixed(3)}, p&nbsp;=&nbsp;${best.p_smoke.toFixed(2)}.
+       That is a null on a null: it doesn't prove nothing is there, only that
+       what's missing isn't hiding at a lag.`;
+  }
+
   $("bound").innerHTML =
     `This is a bounded null, not a proof that no relationship exists. With
      ${d.n_days - 1} day-over-day changes the 95% interval spans roughly ±0.32,

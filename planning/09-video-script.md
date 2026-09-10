@@ -221,11 +221,14 @@ above. Recording the draft version would have put false numbers in the video:
 > winter."*
 
 This is background context about how stubble-burning attribution is used in
-India. **We did not measure it, and nothing in this repository evidences it.**
-It is included because it is the reason the accuracy of the method matters, and
-it is widely reported — but if a judge asks "how do you know that?", the honest
-answer is "that's context, not our finding; our finding starts at the next
-sentence."
+India. **We did not measure it** — but it is now sourced, so it is defensible.
+India's Commission for Air Quality Management levies Environmental Compensation
+for stubble burning, and those rates were doubled on 6 November 2024, inside the
+season we analysed, after the Supreme Court called the existing fines too
+nominal. Citations are in the README under "Sources for the enforcement
+context." If a judge asks "how do you know that?", the honest answer is "it's
+documented policy, cited in the repo — it's context rather than our finding, and
+our finding starts at the next sentence."
 
 Two guards keep the rest of the beat defensible:
 

@@ -303,6 +303,16 @@ blockquote {
   color: var(--ink);
 }
 
+/* The differencing objection sits on the first below-fold screen because it is
+   the sharpest challenge to the headline, and answering it there is worth more
+   than answering it in a limitations list nobody scrolls to. */
+.lagcheck {
+  margin: 22px 0;
+  padding: 16px 18px;
+  border-left: 2px solid var(--ground-line);
+  font-size: 14.5px;
+}
+
 .tag {
   display: inline-block;
   margin-bottom: 12px;
