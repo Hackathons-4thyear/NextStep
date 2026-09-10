@@ -116,8 +116,14 @@ function scene() {
   }
   if (t < BEATS.count[0]) {
     const k = clamp01((t - BEATS.trace[0]) / (BEATS.trace[1] - BEATS.trace[0]));
+    // The trace runs eleven seconds, half the piece. One unchanging line for
+    // that long reads as a stalled frame, and the second line is where the
+    // causal rule gets stated — which is the thing that makes this a
+    // reconstruction rather than a map of fires near a line.
     return { beat: "trace", dataTime: k * loop, pm: peak, terrain: 1, showPath: true,
-             narration: "Stepping the recorded wind backwards, hour by hour." };
+             narration: k < 0.5
+               ? "Stepping the recorded wind backwards, hour by hour."
+               : "Each fire lights up only as the air reaches it — never before." };
   }
   if (t < BEATS.hold[0]) {
     const k = clamp01((t - BEATS.count[0]) / (BEATS.count[1] - BEATS.count[0]));

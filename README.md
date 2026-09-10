@@ -29,9 +29,16 @@ each with the statistic that killed it.
 ## Why it matters that the method can't do this
 
 Blaming Delhi's smog on Punjab's stubble burning is not a debate that stays in
-journals. It drives enforcement, court directives and fines on individual
-farmers, every winter. The accuracy of that attribution is somebody's
-livelihood — and counting upwind fires is the obvious way to do it.
+journals — it is enforced on individual farmers. India's Commission for Air
+Quality Management levies Environmental Compensation for stubble burning, and on
+**6 November 2024 — in the middle of the season we analysed** — those rates were
+doubled following Supreme Court criticism that existing fines were too nominal:
+₹5,000 for under two acres, ₹10,000 for two to five, ₹30,000 above that,
+collected by nodal officers across Punjab, Haryana, and the NCR districts of
+Rajasthan and Uttar Pradesh.<sup>[1](#sources-for-the-enforcement-context)</sup>
+
+The accuracy of that attribution is somebody's livelihood — and counting upwind
+fires is the obvious way to do it.
 
 We have **not** shown that enforcement was misdirected on any specific day. What
 we have shown is narrower and more useful: a fire count cannot distinguish the
@@ -205,10 +212,12 @@ Stated by us, because they are real.
   days (36) all show median FRP of 0.8–1.0 MW and 98–100% night detection —
   indistinguishable from the cells we removed. So roughly 58 further cells of
   persistent non-agricultural heat remain in the data. The effect on results is
-  small, because these sources carry ~1 MW against a burning belt of 21,905
-  detections at 4 MW median, but the filter is drawing an arbitrary line through
-  a continuous population. **Filtering on the signature itself — low FRP plus
-  night-only detection — would be the correct fix, and we did not do it.**
+  small, but we measured it rather than assuming: a signature-based mask (median
+  FRP ≤ 2 MW, ≥90% night-detected) would remove 95 cells and 2,535 detections
+  instead of 13 and 887 — and would change the Punjab burning belt's total fire
+  power by **0.107%**. **Filtering on the signature is the correct fix and we did
+  not make it**, because at that magnitude re-running the whole analysis days
+  before submission risked more than it would have corrected.
 - **First differencing suppresses lagged relationships by construction — so we
   tested for one.** Differencing is the right way to strip shared seasonality,
   but it also damps anything operating with a delay, and transport *is* delayed.
@@ -256,6 +265,22 @@ be underpowered, and it deserves a pre-registered test of its own.
 > We acknowledge the use of data and/or imagery from NASA's Fire Information for
 > Resource Management System (FIRMS), part of NASA's Earth Observing System Data
 > and Information System (EOSDIS).
+
+## Sources for the enforcement context
+
+The claim that stubble-burning attribution drives enforcement against individual
+farmers is background, not something this project measured. It is sourced here
+so a reader can check it independently:
+
+1. CAQM (Imposition, Collection and Utilization of Environmental Compensation
+   for Stubble Burning) Rules — rates doubled by amendment notified 6 Nov 2024.
+   Reported by [LiveLaw](https://www.livelaw.in/top-stories/after-supreme-court-rap-centre-doubles-penalties-for-stubble-burning-farmers-to-pay-up-to-rs-30000-for-violations-274583)
+   and [ANI](https://aninews.in/news/national/general-news/caqm-issues-revised-environmental-compensation-rates-to-be-imposed-for-stubble-burning20241108020343/);
+   farmer response reported by
+   [The Tribune](https://www.tribuneindia.com/news/punjab/punjab-farmers-condemn-centres-move-of-doubling-fines-for-stubble-burning/).
+
+Everything else in this README is traceable to a field in `docs/data/` or to a
+test in `tests/`.
 
 ## Prior work disclosure
 

@@ -16,16 +16,20 @@ Paste-ready. Matches the video's voice: the question, not a boast.
 ## Elevator pitch (first paragraph — many judges read only this)
 
 Blaming Delhi's winter smog on Punjab's stubble burning is not an academic debate.
-It drives enforcement, court directives and fines on individual farmers every
-winter, and the obvious way to make that attribution is to count fires burning
-upwind. **We built a physical transport model to test whether that reasoning
-holds — and it doesn't hold the way it is usually assumed to.** We step recorded
-wind backwards from Delhi, fifteen minutes at a time, to reconstruct where the
-arriving air came from and which satellite-detected fires it crossed, then test it
-across a full season against a deliberately fair baseline. It lost in all four
+It is enforced on individual farmers: India's Commission for Air Quality
+Management levies Environmental Compensation for stubble burning, and those
+rates were doubled on 6 November 2024 — mid-way through the season we analysed —
+after the Supreme Court called the existing fines too nominal. The obvious way to
+make that attribution is to count fires burning upwind.
+
+**We built a physical transport model to test whether that reasoning holds — and
+it doesn't hold the way it is usually assumed to.** We step recorded wind
+backwards from Delhi, fifteen minutes at a time, to reconstruct where the
+arriving air came from and which satellite-detected fires it crossed, then test
+it across a full season against a deliberately fair baseline. It lost in all four
 pre-registered specifications. And when we applied the same scrutiny to the
-baseline, that fell apart too — its apparent correlation was the burning season and
-the smog season rising together, and it vanished under first differencing.
+baseline, that fell apart too — its apparent correlation was the burning season
+and the smog season rising together, and it vanished under first differencing.
 
 We are careful about what this licenses. We have **not** shown that enforcement was
 misdirected on any particular day. We have shown something narrower: a fire count
