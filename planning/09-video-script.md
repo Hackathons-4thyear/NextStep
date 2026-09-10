@@ -1,8 +1,18 @@
-# Video script — 4:30 target, 5:00 hard ceiling
+# Video script — 638 words, 4:54 at recording pace
 
-Word counts below are measured, not estimated, at 150 words per minute. Read it
-aloud with a stopwatch: if you speak slowly this runs long, and going over five
-minutes risks disqualification on a stated requirement.
+Timed at **130 words per minute**, which is what people actually do on camera —
+not the 150 wpm a silent read suggests. Measured, not estimated:
+
+| Pace | Runtime |
+|---|---|
+| 120 wpm (slow, nervous) | 5:19 — **over the ceiling** |
+| **130 wpm (realistic)** | **4:54** |
+| 140 wpm (confident) | 4:33 |
+
+Six seconds of headroom at the realistic pace. If a rehearsal runs over 5:00,
+`11-shot-list.md` lists the two lines to cut and the four that must survive.
+
+Shot directions and the read-aloud stumble list are in `11-shot-list.md`.
 
 Every number is pulled from `docs/data/`. If you re-run the pipeline and a
 number moves, fix it here too.
@@ -30,16 +40,14 @@ frame while you finish. The scrub doubles as proof the timeline is interactive.
 frame lands in silence.
 
 > "This is the air that arrived in Delhi on the morning of the 18th of November,
-> when PM2.5 hit seven hundred micrograms — nearly three times the threshold for
-> severe.
+> when PM2.5 hit seven hundred micrograms.
 >
 > We're stepping the recorded wind backwards, fifteen minutes at a time, for
-> forty-eight hours. The faint lines are seven alternative starting points — that
-> spread is our uncertainty. Every fire that lights up is one this air passed
-> over, and it only lights up once the air reaches it.
+> forty-eight hours. The faint lines are seven alternative starting points —
+> that's our uncertainty. Every fire lights up only once the air reaches it.
 >
 > Five hundred kilometres. One thousand three hundred and eighty-four fires.
-> Nearly half the weight in a single place: Jalandhar and Moga, in Punjab."
+> Nearly half the weight in one place: Jalandhar and Moga, in Punjab."
 
 ---
 
@@ -67,9 +75,8 @@ land before any result does.** Do not cut it.
 
 **Shot:** scrub slowly across the path.
 
-> "Under the hood it's a Lagrangian back-trajectory — the same class of method
-> NOAA's HYSPLIT uses. Fires from NASA FIRMS, winds from ERA5 reanalysis, air
-> quality from ground monitors."
+> "Underneath, it's a Lagrangian back-trajectory — the method NOAA's HYSPLIT
+> uses. Fires from NASA FIRMS, winds from ERA5 reanalysis."
 
 ---
 
@@ -79,17 +86,18 @@ land before any result does.** Do not cut it.
 
 > "One convincing day isn't evidence. So we wrote down what would count as
 > success *before* we ran it — four specifications, fixed in advance. That's
-> called pre-registering, and it means you can't quietly go looking for the
-> version that works.
+> called pre-registering: it means you can't quietly go looking for the version
+> that works.
 >
-> We scored it against a deliberately fair opponent: a naive model that just
-> counts all the fire power in the region over the same forty-eight hours. Both
-> models see identical fires. Ours also knows where the wind went.
+> Our opponent was deliberately fair — a naive model that just counts all the
+> fire power in the region over the same forty-eight hours. Both see identical
+> fires. Ours also knows where the wind went.
 >
-> We lost. In all four. Our index never reached significance in any of them.
+> And by that standard, all four specifications failed. Our index never reached
+> significance in any of them.
 >
-> That's not a failed project. Knowing that a method doesn't work, and being able
-> to say exactly why, is a result."
+> That's not a failed project. Knowing a method doesn't work, and why, is a
+> result."
 
 ---
 
@@ -102,20 +110,20 @@ land before any result does.** Do not cut it.
 > direction — and Delhi's air was less than half as polluted.
 >
 > Our index counts fires along the path. But how many you cross depends on how
-> far the air travelled, and that depends on wind speed — and wind also blows the
-> city clean. We built an index that rises on exactly the days the pollution gets
-> flushed out.
+> far the air travelled, which depends on wind speed — and wind also blows the
+> city clean. We built an index that rises on the days the pollution gets flushed
+> out.
 >
-> Then we tested the baseline the same way. Its correlation was point five seven.
-> But burning and smog both rise and fall across the season — two things that
-> follow the calendar track each other without either causing the other. Ask
-> whether a *change* in burning predicts a *change* in pollution, and it drops to
-> point zero five.
+> The baseline fell apart too. Its correlation was point five seven. But burning
+> and smog both rise and fall across the season — two things following the
+> calendar track each other without either causing the other. Ask whether a
+> *change* in burning predicts a *change* in pollution, and it drops to point
+> zero five.
 >
 > And this comes back to the farmers. On fifteen of our fifty-two days, our
 > reconstruction says the arriving air hadn't come from the burning belt at all.
-> We're not telling you enforcement was wrong on those days. We're telling you a
-> fire count could never have told you it was right."
+> We're not telling you enforcement was wrong. We're telling you a fire count
+> could never have told you it was right."
 
 ---
 
@@ -124,18 +132,18 @@ land before any result does.** Do not cut it.
 **Shot:** the limitations section, then back to the hero frame for the last line.
 
 > "The interesting part wasn't the model. It was the three times we nearly fooled
-> ourselves. A baseline whose reference level was the median of the very window it
-> was meant to precede — circular, and it flattered us. A negative control that
-> looked convincing and died the moment we significance-tested it. And that point
-> five seven, which looked like a real finding until we asked whether it survived
-> removing the season.
+> ourselves. A baseline whose reference level was the median of the window it was
+> meant to precede — circular, and it flattered us. A negative control that looked
+> convincing, and died when we significance-tested it. And that point five seven,
+> which looked like a finding until we asked whether it survived removing the
+> season.
 >
 > That last one is the result. We didn't just fail to find something — we showed
 > the obvious method's apparent skill was an artefact. The calendar, not the
-> physics. That holds whether or not our model had worked.
+> physics.
 >
-> We can't tell you Delhi's smog comes from Punjab. We can tell you exactly why
-> counting upwind fires won't prove it."
+> We can't tell you Delhi's smog comes from Punjab. We can tell you why counting
+> upwind fires won't prove it."
 
 ---
 
