@@ -201,6 +201,11 @@ VALIDATION_ARRIVAL_HOURS_UTC = [0, 6, 12, 18]
 # leaves the day-to-day variation, which is what a useful model has to explain.
 DETREND_WINDOW_DAYS = 7
 
+# Resamples for the bootstrap interval on the differenced correlation. The
+# analytic Fisher interval assumes bivariate normality, which a heavily skewed
+# fire index does not satisfy.
+BOOTSTRAP_ITERATIONS = 5000
+
 # Hour of day (UTC) at which the season-wide daily trajectory is launched.
 # Fixed rather than chosen per day: picking each day's own PM2.5 peak hour
 # would select for the outcome being measured and inflate the correlation.

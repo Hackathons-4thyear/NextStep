@@ -255,6 +255,8 @@ def export_season(verbose=True):
         # would not test the claim.
         "straightness_split": stats["straightness_split"],
         "confound": stats["confound"],
+        "differenced_lag_sweep": stats["differenced_lag_sweep"],
+        "bootstrap_differenced": stats["bootstrap_differenced"],
     }
 
     SEASON_JSON.write_text(json.dumps(payload))

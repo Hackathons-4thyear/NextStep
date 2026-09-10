@@ -60,9 +60,12 @@ tracks that shared shape scores well on levels without predicting a single day.
 The warning sign was visible beforehand: enlarging the fire region lifted the
 baseline from ρ = 0.300 to ρ = 0.573 while giving it no new physics at all.
 
-**This is a bounded null, not a proof of no effect.** With 51 day-over-day changes
-the 95% interval spans roughly ±0.32, so a strong daily relationship is excluded
-and a modest one is not.
+**This is a bounded null, not a proof of no effect.** A 5,000-sample bootstrap
+over the 51 day-over-day changes puts the wind-aware correlation at +0.048, 95%
+CI (−0.273, +0.361), and the naive count at +0.052, CI (−0.259, +0.346). A
+strong daily relationship is excluded; a modest one is not. The bootstrap makes
+no normality assumption and lands within 0.02 of the analytic interval, so the
+index's heavy skew was not distorting the bound.
 
 ### The pre-registered specification grid
 
@@ -206,13 +209,13 @@ Stated by us, because they are real.
   detections at 4 MW median, but the filter is drawing an arbitrary line through
   a continuous population. **Filtering on the signature itself — low FRP plus
   night-only detection — would be the correct fix, and we did not do it.**
-- **First differencing removes lagged signal by construction.** Our headline test
-  correlates day-over-day changes, which is the right way to strip shared
-  seasonality — but it also suppresses any relationship that operates with a
-  delay, and transport is a delayed process. We ran the lag sweep on levels only,
-  not on the differenced series, so we cannot rule out a lagged day-to-day
-  relationship that our primary test is structurally blind to. This is a known
-  property of the method rather than a bug, and it bounds what our null means.
+- **First differencing suppresses lagged relationships by construction — so we
+  tested for one.** Differencing is the right way to strip shared seasonality,
+  but it also damps anything operating with a delay, and transport *is* delayed.
+  We therefore swept lags 0–48 h on the **differenced** series as well. **No lag
+  reaches significance for either model** (0 of 25; the wind-aware index peaks at
+  6 h with ρ = 0.169, p = 0.24). The null is not an artefact of differencing away
+  a delayed signal — there is no delayed signal at these lags to remove.
 
 ## Claims we could have made, and didn't
 

@@ -330,6 +330,83 @@ def differenced_comparison(single):
     return out
 
 
+def differenced_lag_sweep(single, pm_series):
+    """
+    Lag sweep on the differenced series, closing a known gap.
+
+    Our headline test correlates day-over-day changes, which strips the shared
+    seasonal trend — but differencing also suppresses relationships that operate
+    with a delay, and transport is a delayed process. The original lag sweep ran
+    on levels only, so the primary result was structurally blind to a lagged
+    day-to-day relationship.
+
+    This sweeps the same lags against differenced PM2.5. If a real lagged
+    relationship exists, it should appear here as a peak away from zero.
+    """
+    arrivals = pd.to_datetime(single["arrival_utc"], utc=True)
+    dsmoke = single["smoke_index"].astype(float).diff()
+    dnaive = single["naive_index"].astype(float).diff()
+
+    out = []
+    for lag in config.LAG_SWEEP_HOURS:
+        pm = pd.Series([pm25_response(pm_series, t, lag) for t in arrivals]).diff()
+        rho_s, p_s = _spearman(dsmoke.to_numpy(), pm.to_numpy())
+        rho_n, p_n = _spearman(dnaive.to_numpy(), pm.to_numpy())
+        out.append({"lag_h": int(lag), "rho_smoke": rho_s, "p_smoke": p_s,
+                    "rho_naive": rho_n, "p_naive": p_n})
+    return pd.DataFrame(out)
+
+
+def bootstrap_differenced(single, n_boot=None, seed=0):
+    """
+    Bootstrap confidence interval on the differenced correlation.
+
+    The analytic Fisher interval assumes bivariate normality, which a heavily
+    skewed fire index does not satisfy. Resampling days with replacement makes
+    no such assumption and also answers a second question: whether the near-zero
+    correlation is stable, or an average over a few influential days.
+    """
+    n_boot = n_boot or config.BOOTSTRAP_ITERATIONS
+    d = single.sort_values("date").reset_index(drop=True)
+    dpm = d["pm25"].astype(float).diff().to_numpy()
+    ds = d["smoke_index"].astype(float).diff().to_numpy()
+    dn = d["naive_index"].astype(float).diff().to_numpy()
+
+    ok = np.isfinite(dpm) & np.isfinite(ds) & np.isfinite(dn)
+    dpm, ds, dn = dpm[ok], ds[ok], dn[ok]
+    n = len(dpm)
+    rng = np.random.default_rng(seed)
+
+    boot_s, boot_n = [], []
+    for _ in range(n_boot):
+        idx = rng.integers(0, n, n)
+        rs, _ = _spearman(ds[idx], dpm[idx])
+        rn, _ = _spearman(dn[idx], dpm[idx])
+        if np.isfinite(rs):
+            boot_s.append(rs)
+        if np.isfinite(rn):
+            boot_n.append(rn)
+
+    def summarise(obs, boots):
+        b = np.array(boots, dtype=float)
+        return {
+            "observed": float(obs),
+            "ci_low": float(np.percentile(b, 2.5)),
+            "ci_high": float(np.percentile(b, 97.5)),
+            "sd": float(b.std()),
+            "frac_positive": float((b > 0).mean()),
+        }
+
+    obs_s, _ = _spearman(ds, dpm)
+    obs_n, _ = _spearman(dn, dpm)
+    return {
+        "n_pairs": int(n),
+        "n_boot": int(n_boot),
+        "smoke": summarise(obs_s, boot_s),
+        "naive": summarise(obs_n, boot_n),
+    }
+
+
 def confound_correlations(single):
     """
     The diagnosis of *why* the wind-aware index fails.
@@ -480,6 +557,8 @@ def main(verbose=True):
     detrend = differenced_comparison(single)
     split = straightness_split(single)
     confound = confound_correlations(single)
+    dlag = differenced_lag_sweep(single, pm_series)
+    boot = bootstrap_differenced(single)
     st = compute_stats(single, grid)
 
     hourly.to_csv(HOURLY_CSV, index=False)
@@ -493,6 +572,8 @@ def main(verbose=True):
         "detrended_comparison": detrend,
         "straightness_split": split,
         "confound": confound,
+        "differenced_lag_sweep": dlag.to_dict(orient="records"),
+        "bootstrap_differenced": boot,
     }
     STATS_JSON.write_text(json.dumps(payload, indent=2, default=str))
 
