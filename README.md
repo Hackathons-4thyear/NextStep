@@ -1,52 +1,51 @@
 # Smoke Forensics
 
-**Does Delhi's winter smog come from Punjab's stubble burning? We built a physical
-transport model to find out, pre-registered the test, and it said no — or rather,
-it said nobody has shown it yet, including us.**
+### Does Delhi's winter smog come from Punjab's stubble burning?
 
-🔗 **Live demo: https://hackathons-4thyear.github.io/NextStep/**
+![The reconstructed path of the air that arrived in Delhi on 18 November 2024, traced backwards through recorded wind, with satellite-detected fires igniting as the path reaches them](docs/animation.gif)
+
+**🔗 Live demo: https://hackathons-4thyear.github.io/NextStep/**
+
+We traced the air arriving in Delhi backwards through recorded wind, found the
+fires it crossed, pre-registered a test of whether that explains the pollution —
+and ran it across a full season against a deliberately fair baseline.
+
+> **The result is a null.** Neither a wind-aware trajectory attribution **nor** a
+> naive regional fire count explains day-to-day variation in Delhi's PM2.5.
+> The fire count's apparent advantage — Spearman **ρ = 0.573**, p < 0.0001 —
+> is entirely seasonal co-trending. It **collapses to ρ = 0.052** (p = 0.71) the
+> moment you correlate day-over-day *changes* instead of levels.
+
+Burning rises and falls across the season; so does Delhi's smog. Anything that
+tracks the calendar scores well without predicting a single day. **That is the
+finding, and it is about the method rather than about us** — it holds however
+good your trajectory model is.
+
+Getting here meant killing five claims we wanted to make. They are listed below,
+each with the statistic that killed it.
 
 ---
 
-## Why this matters
+## Why it matters that the method can't do this
 
 Blaming Delhi's smog on Punjab's stubble burning is not a debate that stays in
 journals. It drives enforcement, court directives and fines on individual
 farmers, every winter. The accuracy of that attribution is somebody's
-livelihood.
+livelihood — and counting upwind fires is the obvious way to do it.
 
-And the obvious way to do the attribution is to count fires: a lot of burning
-upwind, therefore the smoke is theirs. **We built the tool to test whether that
-reasoning holds, and it does not hold in the way it is usually assumed to.**
+We have **not** shown that enforcement was misdirected on any specific day. What
+we have shown is narrower and more useful: a fire count cannot distinguish the
+days when the arriving air actually made the journey from the days when it did
+not. On 15 of our 52 days, our reconstruction puts the air arriving in Delhi
+from the east, not from the burning belt at all. A fire count scores those days
+identically.
 
-To be precise about what we are and are not saying: we have **not** shown that
-enforcement was misdirected on any specific day. What we have shown is narrower
-and, we think, more useful — a fire count cannot distinguish the days when the
-arriving air actually made the journey from the days when it did not. On 15 of
-our 52 days, our reconstruction puts the air arriving in Delhi from the east,
-not from the burning belt at all. A fire count would have scored those days the
-same way regardless.
-
-Knowing when a method cannot support a conclusion is what stops it being used
-to reach one. That is the contribution here, and it is the reason a null result
-was worth publishing rather than burying.
+Knowing when a method cannot support a conclusion is what stops it being used to
+reach one.
 
 ---
 
-## The headline result
-
-We traced the air arriving in Delhi backwards through recorded wind, hour by hour,
-and identified the satellite-detected fires it passed over. Then we tested that
-attribution against a deliberately fair opponent across an entire burning season.
-
-> On this region and season, **neither** a wind-aware trajectory attribution **nor**
-> a naive regional fire count explains day-to-day variation in Delhi's PM2.5.
-> The naive baseline's apparent advantage on raw levels (Spearman ρ = 0.573,
-> p < 0.0001) is **entirely seasonal co-trending** — it collapses to ρ = 0.052
-> (p = 0.71) once we correlate day-over-day changes instead of levels.
-
-This is a null result. It is also the honest one, and getting to it required
-killing several findings we wanted to be true.
+## The evidence
 
 ### The seasonality test that decided it
 
