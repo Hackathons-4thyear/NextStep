@@ -74,92 +74,72 @@
 <section class="findings">
 
   <div class="block">
-    <h2>Does this hold up across the whole season?</h2>
-    <p class="lede" id="headline">—</p>
-    <p>
-      One convincing episode is not evidence. We ran the same reconstruction on
-      every day of the season and scored it against a deliberately fair
-      opponent: a naive count of all fire power in the region over the same
-      48&nbsp;hours, which knows nothing about wind. Both models see identical
-      fires. The only difference is whether they know where the air went.
-    </p>
-  </div>
-
-  <div class="block rule">
-    <span class="tag">Result</span>
-    <h3>The baseline was tracking the calendar</h3>
-    <p>
-      The naive fire count appeared to win decisively on raw levels. It does not
-      survive removing the seasonal trend.
-    </p>
-    <div class="tablewrap"><table class="grid" id="detrend"></table></div>
-    <p>
-      Burning rises and falls across the season; so does Delhi's PM2.5. An index
-      that tracks that shared shape scores well on levels without predicting any
-      individual day. Correlate day-over-day <em>changes</em> instead, and both
-      models fall to zero. The warning sign was visible beforehand: enlarging
-      the fire region lifted the baseline from 0.300 to 0.573 while giving it no
-      new physics at all.
-    </p>
-  </div>
-
-  <div class="block rule">
-    <span class="tag">Result</span>
-    <h3>Every specification, fixed before we looked</h3>
-    <p>
-      Four combinations, written down before the numbers existed. The
-      ventilation correction is applied to <em>both</em> models — if ventilation
-      is what matters, the baseline is entitled to it too.
-    </p>
-    <div class="tablewrap"><table class="grid" id="grid"></table></div>
-    <p id="grid-note">—</p>
-  </div>
-
-  <div class="block rule">
-    <span class="tag">Result</span>
-    <h3>Why the index fails: it measures wind, not smoke</h3>
+    <h2>What we found</h2>
+    <blockquote id="claim">—</blockquote>
     <figure class="chart">
-      <svg id="confound-chart" viewBox="0 0 640 300" role="img"
-           aria-label="Scatter plot of how far the air travelled against the PM2.5 that arrived, one point per day, sized by the number of fires crossed. Days where the air travelled furthest and crossed the most fires are not the most polluted days."></svg>
-      <figcaption id="chart-cap">—</figcaption>
+      <svg id="collapse-chart" viewBox="0 0 640 228" role="img"
+           aria-label="Bar chart comparing both models on raw levels and on day-over-day change. The naive fire count scores 0.573 on raw levels and 0.052 once the seasonal trend is removed; the wind-aware index is near zero in both."></svg>
+      <figcaption id="collapse-cap">—</figcaption>
     </figure>
-    <div class="tablewrap"><table class="grid" id="confound"></table></div>
-    <p id="confound-note">—</p>
+    <p id="bound">—</p>
   </div>
 
   <div class="block rule">
-    <span class="tag exploratory">Exploratory — not a result</span>
-    <h3>Two days that show the problem</h3>
+    <h3>The mechanism, in two days</h3>
     <p>
-      An illustration, not evidence: two specific days, described accurately.
-      Nothing is inferred from a sample of two.
+      Why a fire count misleads. Two consecutive days, described exactly.
     </p>
     <div class="twoframe" id="twoframe"></div>
     <p id="twoframe-note">—</p>
   </div>
 
   <div class="block rule">
-    <span class="tag exploratory">Exploratory — not a result</span>
-    <h3>Signals that point the right way but do not reach significance</h3>
-    <p>
-      These are the patterns we would want to be true. At 52 days none of them
-      clears the bar, and we are listing them here rather than in the results
-      above for exactly that reason.
-    </p>
-    <div class="tablewrap"><table class="grid" id="explore"></table></div>
-    <p id="explore-note">—</p>
+    <h3>And across the whole season</h3>
+    <figure class="chart">
+      <svg id="confound-chart" viewBox="0 0 640 300" role="img"
+           aria-label="Scatter plot of how far the air travelled against the PM2.5 that arrived, one point per day, sized by the number of fires crossed. Days where the air travelled furthest and crossed the most fires are not the most polluted days."></svg>
+      <figcaption id="chart-cap">—</figcaption>
+    </figure>
+    <p id="confound-note">—</p>
+    <details class="drop">
+      <summary>The five correlations behind that, with p-values</summary>
+      <div class="tablewrap"><table class="grid" id="confound"></table></div>
+    </details>
   </div>
 
   <div class="block rule">
-    <h2>What we are claiming</h2>
-    <blockquote id="claim">—</blockquote>
-    <p id="bound">—</p>
+    <h3>We wrote the test down before we ran it</h3>
+    <p id="grid-note">—</p>
+    <details class="drop" open>
+      <summary>All four pre-registered specifications, including the ones that lost</summary>
+      <p class="drop-note">
+        Four combinations, fixed before the numbers existed. The ventilation
+        correction is applied to <em>both</em> models — if ventilation is what
+        matters, the baseline is entitled to it too. Both models see identical
+        fires; the only difference is whether they know where the wind went.
+      </p>
+      <div class="tablewrap"><table class="grid" id="grid"></table></div>
+    </details>
+    <details class="drop">
+      <summary>The seasonality test in full, including detrended residuals</summary>
+      <div class="tablewrap"><table class="grid" id="detrend"></table></div>
+    </details>
+  </div>
+
+  <div class="block rule">
+    <h3>What we are not claiming</h3>
+    <p id="explore-note">—</p>
+    <details class="drop">
+      <summary>Signals that point the right way and still don't clear the bar</summary>
+      <div class="tablewrap"><table class="grid" id="explore"></table></div>
+    </details>
     <p>
       This is a null result, and it is the useful one. A project that reported
       the levels correlation and stopped would have published a number with no
       day-to-day content in it. What the work does establish is why a
-      fire-counting index fails, which is a reusable warning for anyone building
-      the same thing.
+      fire-counting index fails — a reusable warning for anyone building the
+      same thing. The full limitations, and the claims we could have made and
+      didn't, are in the <a href="https://github.com/Hackathons-4thyear/NextStep#limitations">README</a>.
     </p>
   </div>
 

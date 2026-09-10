@@ -381,6 +381,72 @@ function updateSpark(dt) {
   dot.setAttribute("cx", x); dot.setAttribute("cy", y);
 }
 
+/* ----------------------------------------------------------- collapse chart */
+
+/**
+ * The finding, as a shape: both models on raw levels, then the same two once
+ * the seasonal trend is removed.
+ *
+ * This replaces a table as the first thing below the fold. The single bar that
+ * matters is the naive baseline's — tall on levels, gone on differences — and a
+ * table made the reader compare two numbers in different rows to see it.
+ */
+function drawCollapseChart() {
+  const svg = $("collapse-chart");
+  const d = season.detrended_comparison;
+  if (!svg || !d) return;
+
+  const W = 640, H = 228, L = 186, R = 26;
+  const maxRho = 0.7;
+  const x = (v) => L + (Math.max(v, 0) / maxRho) * (W - L - R);
+
+  const groups = [
+    { title: "Raw levels — what a simple correlation shows", y: 26,
+      rows: [["Naive fire count", d.levels.rho_naive, d.levels.p_naive],
+             ["Wind-aware index", d.levels.rho_smoke, d.levels.p_smoke]] },
+    { title: "Day-over-day change — seasonality removed", y: 122,
+      rows: [["Naive fire count", d.first_differences.rho_naive, d.first_differences.p_naive],
+             ["Wind-aware index", d.first_differences.rho_smoke, d.first_differences.p_smoke]] },
+  ];
+
+  let g = "";
+  // gridlines
+  for (let v = 0; v <= maxRho + 1e-9; v += 0.1) {
+    g += `<line x1="${x(v).toFixed(1)}" y1="18" x2="${x(v).toFixed(1)}" y2="${H - 30}"
+            stroke="var(--ground-line)" stroke-width="1"/>
+          <text x="${x(v).toFixed(1)}" y="${H - 14}" text-anchor="middle" font-size="10.5"
+            fill="var(--ink-quiet)">${v.toFixed(1)}</text>`;
+  }
+
+  for (const grp of groups) {
+    g += `<text x="0" y="${grp.y}" font-size="12" font-weight="600"
+            fill="var(--ink)">${grp.title}</text>`;
+    grp.rows.forEach(([label, rho, p], i) => {
+      const y = grp.y + 14 + i * 30;
+      const sig = p < 0.05;
+      const fill = sig ? "var(--fire)" : "rgba(140,154,171,.45)";
+      g += `<text x="0" y="${y + 15}" font-size="12" fill="var(--ink-quiet)">${label}</text>
+            <rect x="${L}" y="${y}" width="${Math.max(x(rho) - L, 2).toFixed(1)}" height="21"
+              fill="${fill}" rx="2"/>
+            <text x="${(x(rho) + 9).toFixed(1)}" y="${y + 15}" font-size="12.5"
+              font-weight="600" fill="${sig ? "var(--ink)" : "var(--ink-quiet)"}">
+              ${rho >= 0 ? "+" : ""}${rho.toFixed(3)}${sig ? "" : "  n.s."}</text>`;
+    });
+  }
+  g += `<text x="${L}" y="${H - 1}" font-size="10.5" fill="var(--ink-quiet)">
+          Spearman correlation with observed PM2.5 · filled = statistically significant</text>`;
+  svg.innerHTML = g;
+
+  $("collapse-cap").innerHTML =
+    `The naive fire count scores ${d.levels.rho_naive.toFixed(3)} against Delhi's
+     PM2.5 — until you ask it to predict a <em>change</em> rather than a level,
+     at which point it falls to ${d.first_differences.rho_naive.toFixed(3)} and
+     stops being significant. Burning and smog both rise and fall across the
+     season, so an index that tracks the calendar scores well without predicting
+     any individual day. Our own wind-aware index never cleared the bar in the
+     first place.`;
+}
+
 /* ----------------------------------------------------------- confound chart */
 
 /**
@@ -469,11 +535,7 @@ function renderFindings() {
   const d = season.detrended_comparison;
   const lv = d.levels, fd = d.first_differences, dr = d.detrended;
 
-  $("headline").innerHTML =
-    `Across ${d.n_days} days the naive fire count tracked Delhi's PM2.5 at
-     ρ&nbsp;=&nbsp;${lv.rho_naive.toFixed(3)}, and our wind-aware index at
-     ρ&nbsp;=&nbsp;${lv.rho_smoke.toFixed(3)}. Then we removed the seasonal
-     trend, and <strong>both fell to zero</strong>.`;
+  drawCollapseChart();
 
   $("detrend").innerHTML = `
     <thead><tr><th>Comparison</th><th>wind-aware ρ</th><th>p</th><th>naive ρ</th><th>p</th></tr></thead>
@@ -501,10 +563,14 @@ function renderFindings() {
 
   const anyWin = season.specification_grid.some((c) => c.smoke_wins);
   $("grid-note").innerHTML =
-    `The wind-aware index does not reach significance in any of the four
-     (all p&nbsp;≥&nbsp;${Math.min(...season.specification_grid.map((c) => c.p_smoke)).toFixed(3)}),
-     and ${anyWin ? "wins one cell" : "beats the baseline in none of them"}.
-     Correcting for ventilation helps it slightly and nowhere near enough.`;
+    `Before running anything we fixed four specifications in writing, so we
+     could not go looking afterwards for the version that worked. By that
+     standard <strong>all four failed</strong>: the wind-aware index reached
+     significance in none of them
+     (all p&nbsp;≥&nbsp;${Math.min(...season.specification_grid.map((c) => c.p_smoke)).toFixed(3)})
+     and ${anyWin ? "won one cell" : "beat the baseline in none"}. Correcting for
+     ventilation helped it slightly and nowhere near enough. We are showing you
+     every cell, including the ones that lost.`;
 
   // Why the index fails. Every row comes from season.json; nothing is typed
   // in here, so the table cannot drift away from the analysis.
@@ -589,12 +655,12 @@ function renderFindings() {
     </tbody>`;
 
   $("explore-note").innerHTML =
-    `The wind-aware correlation changes sign between days when the air genuinely
-     travelled and days when it looped beside the city — the direction transport
-     physics predicts. Air arriving from the sector with no burning was cleaner
-     on average. Both point the way we would want. <strong>Neither clears
-     significance at this sample size</strong>, so neither is a finding, and we
-     are not going to present them as one.`;
+    `Two patterns point exactly the way we wanted. The wind-aware correlation
+     changes sign between days when the air genuinely travelled and days when it
+     looped beside the city — the direction transport physics predicts. And air
+     arriving from the sector with no burning was cleaner on average.
+     <strong>Neither clears significance at this sample size</strong>, so
+     neither is a finding, and we are not presenting them as one.`;
 
   $("claim").innerHTML =
     `On this region and season, <strong>neither</strong> a wind-aware trajectory

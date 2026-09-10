@@ -357,6 +357,38 @@ blockquote {
 .chart svg { display: block; width: 100%; height: auto; }
 .chart figcaption { margin-top: 10px; font-size: 13px; color: var(--ink-quiet); }
 
+/* Disclosures. The full pre-registered grid is the honesty artifact and opens
+   by default; the supporting tables sit behind a click so the finding is not
+   buried under five screens of numbers. Nothing is hidden — everything is one
+   click and still on the page. */
+.drop {
+  margin: 18px 0;
+  border-top: 1px solid var(--ground-line);
+}
+
+.drop > summary {
+  padding: 12px 0 12px 22px;
+  font-size: 13.5px;
+  color: var(--air);
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+}
+
+.drop > summary::-webkit-details-marker { display: none; }
+
+.drop > summary::before {
+  content: "▸";
+  position: absolute;
+  left: 2px;
+  color: var(--ink-quiet);
+}
+
+.drop[open] > summary::before { content: "▾"; }
+.drop > summary:hover { color: var(--ink); }
+
+.drop-note { margin: 0 0 4px; font-size: 14px; }
+
 .tablewrap { overflow-x: auto; margin: 22px 0; }
 
 table.grid { width: 100%; border-collapse: collapse; font-size: 13px; }
